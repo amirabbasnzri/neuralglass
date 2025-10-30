@@ -2,13 +2,14 @@ from django.shortcuts import render
 from .forms import MessageForm
 
 def main(request):
-    print(request.method)
+    print('request recived')
     if request.method == 'POST':
-        form = MessageForm
+        print('data has been sent')
+        form = MessageForm(request.POST)
         if form.is_valid():
             form.save()
     else:
-        form = MessageForm
+        form = MessageForm()
             
     return render(request, 'main/main.html', {'form': form})
 

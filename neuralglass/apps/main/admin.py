@@ -3,7 +3,7 @@ from .models import MessageModel
 
 @admin.register(MessageModel)
 
-class MessageModelAdmin(admin.ModelAdmin):
+class MessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject', 'created_at')
     search_fields = ('name', 'email', 'subject')
     ordering = ('-created_at',)
