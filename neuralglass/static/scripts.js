@@ -172,19 +172,139 @@ https://templatemo.com/tm-597-neural-glass
             observer.observe(el);
         });
 
-        // Form submission effect
-        document.querySelector('.submit-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            this.innerHTML = 'TRANSMITTING...';
-            this.style.background = 'linear-gradient(45deg, #8000ff, #00ffff)';
-            
-            setTimeout(() => {
-                this.innerHTML = 'TRANSMISSION COMPLETE';
-                this.style.background = 'linear-gradient(45deg, #00ff00, #00ffff)';
-                
-                setTimeout(() => {
-                    this.innerHTML = 'TRANSMIT TO MATRIX';
-                    this.style.background = 'linear-gradient(45deg, #00ffff, #ff0080)';
-                }, 2000);
-            }, 1500);
+        // JavaScript Document
+
+/*
+
+TemplateMo 597 Neural Glass
+
+https://templatemo.com/tm-597-neural-glass
+
+*/
+
+// Mobile menu functionality
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
         });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuToggle.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            }
+        });
+
+        // Enhanced smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                // Skip if href is just "#"
+                if (targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced header functionality
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrolled = window.pageYOffset;
+            
+            if (scrolled > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    const originalColor = submitButton.style.backgroundColor;
+    const buttonContainer = submitButton.parentNode;
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newForm = doc.querySelector('form');
+        const hasErrors = newForm.querySelector('.text-danger') || !!newForm.querySelector('small');
+        const isSuccess = !hasErrors && newForm.querySelector('.success-message');
+
+        if (isSuccess) {
+            const messagesDiv = form.querySelector('.messages') || createMessagesDiv(form);
+            messagesDiv.classList.add('success');
+            messagesDiv.textContent = 'Message transmitted to matrix successfully!';
+            form.reset();
+            submitButton.remove();
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.style.backgroundColor = '#28a745';
+            successDiv.style.color = 'white';
+            successDiv.style.padding = '10px';
+            successDiv.style.borderRadius = '5px';
+            successDiv.style.textAlign = 'center';
+            successDiv.textContent = 'Message transmitted to matrix successfully!';
+            buttonContainer.appendChild(successDiv);
+        } else {
+            form.outerHTML = newForm.outerHTML;
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+            submitButton.style.backgroundColor = originalColor;
+        }
+    })
+    .catch(error => {
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+        submitButton.style.backgroundColor = originalColor;
+    });
+}
+
+function createMessagesDiv(form) {
+    const div = document.createElement('div');
+    div.className = 'messages';
+    form.insertBefore(div, form.firstElementChild);
+    return div;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('form[data-ajax]');
+    forms.forEach(form => {
+        form.addEventListener('submit', handleFormSubmit);
+    });
+});
