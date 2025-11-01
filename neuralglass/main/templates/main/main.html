@@ -201,24 +201,49 @@
                     <a href="#" class="glass">📨</a>
                 </div>
             </div>
-        <form method="post" id="" action="">
-            {% csrf_token %}
-            <div class="contact-form glass">
-                <div class="form-group">
-                    <input type="text" name="name" placeholder="(Name)" required>
+            <form method="post" data-ajax="true">
+                {% csrf_token %}
+                <div class="contact-form glass">
+                    <div class="messages mb-3"></div>
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="(Name)" required>
+                        {% if form.name.errors %}
+                            {% for error in form.name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="(Email)" required>
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="subject" placeholder="(Subject)" required>
+                        {% if form.subject.errors %}
+                            {% for error in form.subject.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" name="message" placeholder="(Message)" required></textarea>
+                        {% if form.message.errors %}
+                            {% for error in form.message.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% if success %}
+                        <div class="success-message" style="background-color: #28a745; color: white; padding: 10px; border-radius: 5px; text-align: center;">Message transmitted to matrix successfully!</div>
+                    {% else %}
+                        <button type="submit" class="submit-btn">TRANSMIT TO MATRIX</button>
+                    {% endif %}
                 </div>
-                <div class="form-group">
-                    <input type="email" name="email" placeholder="(Email)" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="subject" placeholder="(Subject)" required>
-                </div>
-                <div class="form-group">
-                    <textarea rows="5" name="message" placeholder="(Message)" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">TRANSMIT TO MATRIX</button>
-            </div>
-        </form>
+            </form>
         </div>
     </section>
 

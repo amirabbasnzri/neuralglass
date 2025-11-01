@@ -19,7 +19,10 @@ class MessageForm(forms.ModelForm):
         email = self.cleaned_data.get('email')
         if len(email) > 254:
             raise ValidationError("email can't have more than 254 letter")
-        return email
+        # elif '@gmail.com' or '@yahoo.com' not in email:
+        #     raise ValidationError("email is incorruct")
+        else:
+            return email
 
     def clean_subject(self):
         subject = self.cleaned_data.get('subject')
