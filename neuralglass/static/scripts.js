@@ -238,8 +238,8 @@ https://templatemo.com/tm-597-neural-glass
             }
         });
 
-        
-function handleFormSubmit(event) {
+ function handleFormSubmit(event) {
+    console.log('Submit intercepted - no reload');
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
@@ -258,8 +258,12 @@ function handleFormSubmit(event) {
             'X-Requested-With': 'XMLHttpRequest'
         }
     })
-    .then(response => response.text())
+    .then(response => {
+        console.log('Response:', response.status);
+        return response.text();
+    })
     .then(html => {
+        console.log('HTML parsed');
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const newForm = doc.querySelector('form');
@@ -283,12 +287,10 @@ function handleFormSubmit(event) {
             buttonContainer.appendChild(successDiv);
         } else {
             form.outerHTML = newForm.outerHTML;
-            submitButton.disabled = false;
-            submitButton.textContent = originalText;
-            submitButton.style.backgroundColor = originalColor;
         }
     })
     .catch(error => {
+        console.error('Fetch failed:', error);
         submitButton.disabled = false;
         submitButton.textContent = originalText;
         submitButton.style.backgroundColor = originalColor;
@@ -303,8 +305,11 @@ function createMessagesDiv(form) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded');
     const forms = document.querySelectorAll('form[data-ajax]');
+    console.log('Forms found:', forms.length);
     forms.forEach(form => {
         form.addEventListener('submit', handleFormSubmit);
+        console.log('Listener attached');
     });
 });
