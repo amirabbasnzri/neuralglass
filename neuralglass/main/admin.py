@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MessageModel, SocialLink
+from .models import MessageModel, SocialLink, ContactText
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -31,3 +31,5 @@ class SocialLinksAdmin(admin.ModelAdmin):
             self.message_user(request, "You cannot create more than 4 records.", level=messages.ERROR)
             return redirect(reverse('admin:main_sociallink_changelist'))
         return super().add_view(request, form_url, extra_context)
+    
+admin.site.register(ContactText)

@@ -52,4 +52,14 @@ class SocialLink(models.Model):
     def __str__(self):
         return self.name
     
+
+class ContactText(models.Model):
+    subtitle = models.CharField(max_length=150)
+    paragraph1 = models.TextField()
+    paragraph2 = models.TextField()
     
+    class Meta:
+        verbose_name = 'ContactText'
+    
+    def __str__(self):
+        return self.subtitle[:70]
