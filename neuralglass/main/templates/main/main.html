@@ -196,7 +196,7 @@
                 <div class="social-links">
                     {% for link in links %}
                         {% if link %}
-                            <a class="glass"><img src="{{ link.icon.url }}" alt="{{ link.name }}"></a>
+                            <a href='{{ link.url }}' class="glass"><img src="{{ link.icon.url }}" alt="{{ link.name }}"></a>
                         {% endif %}        
                     {% endfor %}
                 </div>
