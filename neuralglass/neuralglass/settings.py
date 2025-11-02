@@ -55,11 +55,14 @@ WSGI_APPLICATION = 'neuralglass.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'neuralglass',
+        'USER': 'neuradmin',
+        'PASSWORD': 'neuradmin2025',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
