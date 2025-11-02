@@ -193,12 +193,12 @@
                 <h3>ESTABLISH CONNECTION</h3>
                 <p>Ready to interface with the future? Our neural network specialists are standing by to guide you through the quantum realm of possibilities.</p>
                 <p>Connect through the dimensional gateway and let us initialize your journey into the digital consciousness matrix.</p>
-                
                 <div class="social-links">
-                    <a href="#" class="glass">📡</a>
-                    <a href="#" class="glass">🌐</a>
-                    <a href="#" class="glass">💬</a>
-                    <a href="#" class="glass">📨</a>
+                    {% for link in links %}
+                        {% if link %}
+                            <a class="glass"><img src="{{ link.icon.url }}" alt="{{ link.name }}"></a>
+                        {% endif %}        
+                    {% endfor %}
                 </div>
             </div>
             <form method="post" data-ajax="true">

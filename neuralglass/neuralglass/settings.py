@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     
     # my apps:
     'main',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [

@@ -2,7 +2,6 @@ from django import forms
 from .models import MessageModel
 from django.forms import ValidationError
 
-
 class MessageForm(forms.ModelForm):
     class Meta:
         model = MessageModel
