@@ -100,3 +100,17 @@ class FooterInfo(models.Model):
     
     def __str__(self):
         return f"Footer ({self.year})"
+    
+    
+class TimeLineEvent(models.Model):
+    year = models.CharField(max_length=4)
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    
+    class Meta:
+        verbose_name = 'TimeLineEvent'
+        verbose_name_plural = 'TimeLineEvent'
+        ordering = ['year']
+        
+    def __str__(self):
+        return f'{self.year} - {self.title}'

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import MessageModel, SocialLink, ContactText, MatrixProtocol, FooterInfo
+from .models import MessageModel, SocialLink, ContactText, MatrixProtocol, FooterInfo, TimeLineEvent
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -31,10 +31,8 @@ class SocialLinksAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
     
     def get_changelist_instance(self, request):
-        cl = super().get_changelist_instance(request)
-        if SocialLink.objects.count() >= 4 and not self.has_add_permission(request):
-            messages.error(request, "You've already created 4 records")
-        return cl
+        return super().get_changelist_instance(request)
+
     
     def add_view(self, request, form_url='', extra_context=None):
         if not self.has_add_permission(request):
@@ -42,7 +40,12 @@ class SocialLinksAdmin(admin.ModelAdmin):
             return redirect(reverse('admin:main_sociallink_changelist'))
         return super().add_view(request, form_url, extra_context)
     
-admin.site.register(ContactText)
+@admin.register(ContactText)
+class FooterInfoAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return not ContactText.objects.exists()
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 @admin.register(MatrixProtocol)
 class MatrixProtocolAdmin(admin.ModelAdmin):
@@ -73,3 +76,12 @@ class FooterInfoAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
     
+@admin.register(TimeLineEvent)
+class FooterInfoAdmin(admin.ModelAdmin):
+    
+    def has_add_permission(self, request):
+        if TimeLineEvent.objects.count() >= 4:
+            return not TimeLineEvent.objects.exists()
+        return super().has_add_permission(request)
+
+
