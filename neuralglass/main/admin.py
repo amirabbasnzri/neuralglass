@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MessageModel, SocialLink, ContactText
+from .models import MessageModel, SocialLink, ContactText, MatrixProtocol
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -40,3 +40,25 @@ class SocialLinksAdmin(admin.ModelAdmin):
         return super().add_view(request, form_url, extra_context)
     
 admin.site.register(ContactText)
+
+@admin.register(MatrixProtocol)
+class MatrixProtocolAdmin(admin.ModelAdmin):
+    list_display = ('title', 'emoji', 'description')
+    
+    def has_add_permission(self, request):
+        if MatrixProtocol.objects.count() >= 10:
+            return False
+        return super().has_add_permission(request)
+    
+    def get_changelist_instance(self, request):
+        cl = super().get_changelist_instance(request)
+        if MatrixProtocol.objects.count() >= 10 and not self.has_add_permission(request):
+            messages.error(request, "You've already created 10 records")
+        return cl
+    
+    def add_view(self, request, form_url='', extra_context=None):
+        if not self.has_add_permission(request):
+            self.message_user(request, "You cannot create more than 10 records.", level=messages.ERROR)
+            return redirect(reverse('admin:main_matrixprotocol_changelist'))
+        return super().add_view(request, form_url, extra_context)
+

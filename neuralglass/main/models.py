@@ -63,3 +63,13 @@ class ContactText(models.Model):
     
     def __str__(self):
         return self.subtitle[:70]
+    
+    
+class MatrixProtocol(models.Model):
+    title = models.CharField(max_length=30)
+    description = models.TextField(max_length=80)
+    emoji = models.CharField(max_length=2)
+    
+    def __str__(self):
+        return f'{self.title} - {self.emoji}'
+    
