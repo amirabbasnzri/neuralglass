@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import MessageModel, SocialLink, ContactText, MatrixProtocol
+from .models import MessageModel, SocialLink, ContactText, MatrixProtocol, FooterInfo
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -65,3 +65,11 @@ class MatrixProtocolAdmin(admin.ModelAdmin):
             return redirect(reverse('admin:main_matrixprotocol_changelist'))
         return super().add_view(request, form_url, extra_context)
 
+
+@admin.register(FooterInfo)
+class FooterInfoAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return not FooterInfo.objects.exists()
+    def has_delete_permission(self, request, obj=None):
+        return False
+    

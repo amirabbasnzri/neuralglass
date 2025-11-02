@@ -73,3 +73,30 @@ class MatrixProtocol(models.Model):
     def __str__(self):
         return f'{self.title} - {self.emoji}'
     
+    
+from django.db import models
+
+class FooterInfo(models.Model):
+    year = models.CharField(max_length=4, default="2025")
+    company_name = models.CharField(max_length=100)
+    rights_text = models.CharField(max_length=200)
+    design_by = models.CharField(max_length=100)
+    designer_url = models.URLField()
+    enhanced_by = models.CharField(max_length=100)
+    framework = models.CharField(
+        max_length=100,
+        default="Django-Framework"
+    )
+    framework_url = models.URLField(default='https://www.djangoproject.com')
+    
+    def get_default_github():
+        return SocialLink.objects.filter(name__iexact='GitHub').first()
+    
+    github_url = models.ForeignKey(SocialLink, on_delete=models.SET_NULL, null=True, blank=True, default=get_default_github)
+    
+    class Meta:
+        verbose_name = 'FooterInfo'
+        verbose_name_plural = 'FooterInfo'
+    
+    def __str__(self):
+        return f"Footer ({self.year})"

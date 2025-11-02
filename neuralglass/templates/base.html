@@ -78,19 +78,16 @@
                 <a href="{% url 'main:main' %}#features">Neural Networks</a>
                 <a href="{% url 'main:main' %}#showcase">Matrix Protocols</a>
                 <a href="{% url 'main:main' %}#timeline">Evolution</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Documentation</a>
-                <!-- Add external links -->
-    			<a href="https://github.com/yourproject" target="_blank" rel="noopener">GitHub</a>
+                
+    			<a href="{{ footer_info.github_url }}" target="_blank" rel="noopener">GitHub</a>
             </div>
             <div class="footer-copyright">
-                <p>&copy; 2025 NeuralGlass Interface. All quantum rights reserved across dimensions.</p>
+                <p>&copy; {{ footer_info.year }} - {{ footer_info.company_name }} - {{ footer_info.rights_text }} </p>
             </div>
             <div class="footer-design">
-                Design: <a href="https://templatemo.com" target="_blank" rel="nofollow noopener">TemplateMo</a> | 
-                Enhanced by Neural AI Systems | 
-                <a href="#">Quantum Framework</a>
+                Design: <a href="{{ footer_info.designer_url }}" target="_blank" rel="nofollow noopener"> {{ footer_info.design_by }} </a> | 
+                Enhanced by {{ footer_info.enhanced_by }} | 
+                <a href="{{ footer_info.framework_url }}"> {{ footer_info.framework }} </a>
             </div>
         </div>
 </footer>
