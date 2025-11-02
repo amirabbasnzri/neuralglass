@@ -1,8 +1,11 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from .models import MessageModel, SocialLink, ContactText, MatrixProtocol
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
+
+admin.site.unregister(Group)
 
 @admin.register(MessageModel)
 class MessageAdmin(admin.ModelAdmin):
