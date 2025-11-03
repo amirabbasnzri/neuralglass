@@ -1,5 +1,7 @@
 from django.db import models
 
+
+# messages:
 class MessageModel(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
@@ -13,8 +15,10 @@ class MessageModel(models.Model):
     
     def __str__(self):
         return f'{self.name} - {self.subject}'
+
+# -----------------------------------------------------------------------------------------------------------------
     
-    
+# contact:   
 class SocialLink(models.Model):
     orders = [
         (1, 'first'),
@@ -52,7 +56,6 @@ class SocialLink(models.Model):
     def __str__(self):
         return self.name
     
-
 class ContactText(models.Model):
     subtitle = models.CharField(max_length=150)
     paragraph1 = models.TextField()
@@ -63,19 +66,71 @@ class ContactText(models.Model):
     
     def __str__(self):
         return self.subtitle[:70]
+   
+# -----------------------------------------------------------------------------------------------------------------
+ 
     
+# sections:
+class Section(models.Model):
+    orders = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4')
+    ]
+    section_name = models.CharField(max_length=60, unique=True)
+    order = models.PositiveSmallIntegerField(choices=orders)
     
-class MatrixProtocol(models.Model):
+    class Meta:
+        ordering = ['id']
+    
+    def __str__(self):
+        return f'{self.order} - {self.section_name}'
+    
+class Section2(models.Model):
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=2)
+    title = models.CharField(max_length=30)
+    description = models.TextField(max_length=200)
+    emoji = models.CharField(max_length=2)
+    image = models.ImageField(upload_to='media/quantum_capabilities_img')
+    
+    class Meta:
+        verbose_name = 'Section2'
+        verbose_name_plural = 'Section2'
+    
+    def __str__(self):
+        return f'{self.title} - {self.emoji}'    
+ 
+class Section3(models.Model):
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=3)
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=80)
     emoji = models.CharField(max_length=2)
     
+    class Meta:
+        verbose_name = 'Section3'
+        verbose_name_plural = 'Section3'
+    
     def __str__(self):
         return f'{self.title} - {self.emoji}'
+   
+class Section4(models.Model):
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=4)
+    year = models.CharField(max_length=4)
+    title = models.CharField(max_length=50)
+    description = models.TextField()
     
+    class Meta:
+        verbose_name = 'Section4'
+        verbose_name_plural = 'Section4'
+        ordering = ['year']
+        
+    def __str__(self):
+        return f'{self.year} - {self.title}'
     
-from django.db import models
-
+# ----------------------------------------------------------------------------------------------------------------
+ 
+# footer: 
 class FooterInfo(models.Model):
     year = models.CharField(max_length=4, default="2025")
     company_name = models.CharField(max_length=100)
@@ -101,31 +156,4 @@ class FooterInfo(models.Model):
     def __str__(self):
         return f"Footer ({self.year})"
     
-    
-class TimeLineEvent(models.Model):
-    year = models.CharField(max_length=4)
-    title = models.CharField(max_length=50)
-    description = models.TextField()
-    
-    class Meta:
-        verbose_name = 'TimeLineEvent'
-        verbose_name_plural = 'TimeLineEvent'
-        ordering = ['year']
-        
-    def __str__(self):
-        return f'{self.year} - {self.title}'
-    
-    
-
-class QuantumCapability(models.Model):
-    title = models.CharField(max_length=30)
-    description = models.TextField(max_length=200)
-    emoji = models.CharField(max_length=2)
-    image = models.ImageField(upload_to='media/quantum_capabilities_img')
-    
-    class Meta:
-        verbose_name = 'QuantumCapability'
-        verbose_name_plural = 'QuantumCapabilities'
-    
-    def __str__(self):
-        return f'{self.title} - {self.emoji}'
+# ---------------------------------------------------------------------------------------------------------------

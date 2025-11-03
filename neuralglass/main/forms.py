@@ -1,5 +1,5 @@
 from django import forms
-from .models import MessageModel
+from .models import MessageModel, Section
 from django.forms import ValidationError
 
 class MessageForm(forms.ModelForm):
@@ -34,4 +34,16 @@ class MessageForm(forms.ModelForm):
         if len(message) > 3000:
             raise ValidationError("message can't have more than 3000 letter")
         return message
-    
+  
+  
+class SectionForm(forms.ModelForm):
+    class Meta:
+        model = Section
+        fields = '__all__'
+
+    def clean_order(self):
+        order = self.cleaned_data.get('order')
+        pk = self.instance.pk
+        if Section.objects.filter(order=order).exclude(pk=pk).exists():
+            raise ValidationError(f'Order number {order} is already in use.')
+        return order  

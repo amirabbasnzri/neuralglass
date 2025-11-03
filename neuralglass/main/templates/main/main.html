@@ -63,7 +63,7 @@
         <div class="features-container">
             <h2 class="section-title">QUANTUM CAPABILITIES</h2>
             <div class="diagonal-grid">
-                {% for obj in quantum_capabilities %}
+                {% for obj in section2 %}
                     <div class="feature-row">
                         <div class="feature-content glass">
                             <div class="feature-icon">{{ obj.emoji }}</div>
@@ -81,7 +81,7 @@
     <section class="showcase" id="showcase">
         <h2 class="section-title">MATRIX PROTOCOLS</h2>
         <div class="hexagon-container">
-           {% for obj in matrix_protocol %}
+           {% for obj in section3 %}
                 {% if obj %}
                     <div class="hexagon">
                         <div class="hexagon-inner glass">
@@ -100,7 +100,7 @@
         <h2 class="section-title">EVOLUTION TIMELINE</h2>
         <div class="timeline-container">
             <div class="timeline-line"></div>
-            {% for obj in time_line_event %}
+            {% for obj in section4 %}
                 <div class="timeline-item">
                     <div class="timeline-content glass">
                         <div class="timeline-year">{{ obj.year }}</div>
