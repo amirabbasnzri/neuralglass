@@ -18,11 +18,10 @@ def main(request):
     contact_text = ContactText.objects.last()
     section1 = Section1.objects.all()
     section2 = Section2.objects.all()
-    section3 = Section3.objects.order_by('year').all(),
+    section3 = Section3.objects.order_by('year').all()
     s1 = Section.objects.get(id=1)
     s2 = Section.objects.get(id=2)
     s3 = Section.objects.get(id=3)
-    
     
     context = {
        'site_info': site_info,
@@ -37,7 +36,6 @@ def main(request):
        's1': s1,
        's2': s2,
        's3': s3
-
               }
          
     return render(request, 'main/main.html', context)

@@ -90,11 +90,12 @@
 <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="{% url 'main:main' %}#features">Neural Networks</a>
-                <a href="{% url 'main:main' %}#showcase">Matrix Protocols</a>
-                <a href="{% url 'main:main' %}#timeline">Evolution</a>
-                
-    			<a href="{{ footer_info.github_url }}" target="_blank" rel="noopener">GitHub</a>
+
+                {% for obj in section %}
+                    <a href="{% url 'main:main' %}#{{ obj.section_name }}">{{ obj.section_name }}</a>
+                {% endfor %}
+
+    			<a href="{{ footer_info.github_url.url }}" target="_blank" rel="noopener">GitHub</a>
             </div>
             <div class="footer-copyright">
                 <p>&copy; {{ footer_info.year }} - {{ footer_info.company_name }} - {{ footer_info.rights_text }} </p>

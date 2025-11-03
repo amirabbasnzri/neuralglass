@@ -34,7 +34,7 @@ class SiteInfoAdmin(admin.ModelAdmin):
 @admin.register(Stat)
 class StatAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
-        if Stat.objects.count() >= 6:
+        if Stat.objects.count() >= 4:
             return False
         return super().has_add_permission(request)
 

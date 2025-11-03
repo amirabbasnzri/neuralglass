@@ -13,8 +13,11 @@ class SiteInfo(models.Model):
     
 class Stat(models.Model):
     site_info = models.ForeignKey(SiteInfo, on_delete=models.CASCADE, default=0)
-    stat_value = models.CharField(max_length=5)
+    stat_value = models.CharField(max_length=6)
     stat_label = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return f'{self.stat_label} - {self.stat_value}'
 
 # -----------------------------------------------------------------------------------------------------------------
 
@@ -104,42 +107,39 @@ class Section(models.Model):
         return f'{self.order} - {self.section_name}'
 
 class Section1(models.Model):
-    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=2)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=1)
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=200)
-    emoji = models.CharField(max_length=2)
-    image = models.ImageField(upload_to='media/quantum_capabilities_img')
+    emoji = models.CharField(max_length=4)
+    image = models.ImageField(upload_to='media/section1_img')
     
     class Meta:
-        verbose_name = 'Section2'
-        verbose_name_plural = 'Section2'
+        verbose_name_plural = 'Section1'
     
     def __str__(self):
         return f'{self.title} - {self.emoji}'    
  
 class Section2(models.Model):
-    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=3)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=2)
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=80)
     emoji = models.CharField(max_length=2)
     
     class Meta:
-        verbose_name = 'Section3'
-        verbose_name_plural = 'Section3'
+        verbose_name_plural = 'Section2'
     
     def __str__(self):
         return f'{self.title} - {self.emoji}'
    
 class Section3(models.Model):
     
-    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=4)
-    year = models.CharField(max_length=4)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=3)
+    year = models.PositiveSmallIntegerField(max_length=4)
     title = models.CharField(max_length=50)
     description = models.TextField()
     
     class Meta:
-        verbose_name = 'Section4'
-        verbose_name_plural = 'Section4'
+        verbose_name_plural = 'Section3'
         ordering = ['year']
         
     def __str__(self):
