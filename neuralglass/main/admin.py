@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .forms import SectionForm
 from django.contrib.auth.models import Group
-from .models import MessageModel, SocialLink, ContactText, Section, Section2, Section3, Section4, FooterInfo
+from .models import SiteInfo,Stat, MessageModel, SocialLink, ContactText, Section, Section1, Section2, Section3, FooterInfo
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -10,6 +10,35 @@ from django.dispatch import receiver
 
 
 admin.site.unregister(Group)
+
+# edit_admin_login_panel:
+try:
+    site_info = SiteInfo.objects.first()
+    site_name = site_info.site_name if site_info else "Admin"
+except:
+    site_name = "Admin"
+admin.site.site_header = f'{site_name} Adminetrtion'
+admin.site.site_title = f'{site_name} Portal'
+admin.site.index_title = f'Welcome to {site_name} Administration'
+
+# -----------------------------------------------------------------------------------------------------------------
+
+# site_info:
+@admin.register(SiteInfo)
+class SiteInfoAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        if SiteInfo.objects.count() >= 1:
+            return False
+        return super().has_add_permission(request)
+
+@admin.register(Stat)
+class StatAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        if Stat.objects.count() >= 6:
+            return False
+        return super().has_add_permission(request)
+
+# -----------------------------------------------------------------------------------------------------------------
 
 # messages:
 @admin.register(MessageModel)
@@ -63,7 +92,7 @@ class ContactTextAdmin(admin.ModelAdmin):
 @receiver(post_migrate)
 def create_default_sections(sender, **kwargs):
     if sender.name == 'main': 
-        for i in range(1, 5): 
+        for i in range(1, 4): 
             Section.objects.get_or_create(id=i, defaults={'section_name': str(i), 'order': int(i)})  
   
 @admin.register(Section)
@@ -72,30 +101,30 @@ class SectionAdmin(admin.ModelAdmin):
     list_display = ('section_name', 'order')
     
     def has_add_permission(self, request):
-        if Section.objects.count() >= 4:
+        if Section.objects.count() >= 3:
+            return False
+        return super().has_add_permission(request)
+
+@admin.register(Section1)
+class Section2Admin(admin.ModelAdmin):
+    
+    def has_add_permission(self, request):
+        if Section1.objects.count() >= 4:
             return False
         return super().has_add_permission(request)
 
 @admin.register(Section2)
-class Section2Admin(admin.ModelAdmin):
-    
-    def has_add_permission(self, request):
-        if Section2.objects.count() >= 4:
-            return False
-        return super().has_add_permission(request)
-
-@admin.register(Section3)
 class Section3Admin(admin.ModelAdmin):
     list_display = ('title', 'emoji', 'description')
     
     def has_add_permission(self, request):
-        if Section3.objects.count() >= 10:
+        if Section2.objects.count() >= 10:
             return False
         return super().has_add_permission(request)
     
     def get_changelist_instance(self, request):
         cl = super().get_changelist_instance(request)
-        if Section3.objects.count() >= 10 and not self.has_add_permission(request):
+        if Section2.objects.count() >= 10 and not self.has_add_permission(request):
             messages.error(request, "You've already created 10 records")
         return cl
     
@@ -105,11 +134,11 @@ class Section3Admin(admin.ModelAdmin):
             return redirect(reverse('admin:main_matrixprotocol_changelist'))
         return super().add_view(request, form_url, extra_context)
 
-@admin.register(Section4)
+@admin.register(Section3)
 class Section4Admin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
-        if Section4.objects.count() >= 4:
+        if Section3.objects.count() >= 4:
             return False
         return super().has_add_permission(request)
 

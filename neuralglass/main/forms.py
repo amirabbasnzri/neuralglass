@@ -35,7 +35,6 @@ class MessageForm(forms.ModelForm):
             raise ValidationError("message can't have more than 3000 letter")
         return message
   
-  
 class SectionForm(forms.ModelForm):
     class Meta:
         model = Section

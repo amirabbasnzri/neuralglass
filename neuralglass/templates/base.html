@@ -19,7 +19,7 @@
 
 <header class="glass">
         <nav>
-            <a href="#home" class="logo">
+            <a href="{% url 'main:main' %}" class="logo">
                 <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -47,12 +47,12 @@
                         <animate attributeName="opacity" values="0.6;1;0.6" dur="2.8s" repeatCount="indefinite"/>
                     </line>
                 </svg>
-                NEURALGLASS
+                {{ site_info.site_name }}
             </a>
             <ul class="nav-links">
 
                 {% for obj in section %}
-                    <li><a href="{% url 'main:main' %}#features">{{ obj.section_name }}</a></li>
+                    <li><a href="{% url 'main:main' %}#{{ obj.section_name | slugify }}">{{ obj.section_name }}</a></li>
                 {% endfor %}
 
                 <li><a href="{% url 'main:main' %}#contact">Contact</a></li>

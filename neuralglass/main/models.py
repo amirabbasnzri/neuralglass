@@ -1,5 +1,22 @@
 from django.db import models
 
+# site_info:
+class SiteInfo(models.Model):
+    site_name = models.CharField(max_length=30)
+    logo = models.ImageField(upload_to='media/logo')
+    title = models.CharField(max_length=75)
+    sub_title = models.CharField(max_length=150)
+    description = models.TextField()
+    
+    def __str__(self):
+        return f'{self.site_name} - {self.title}'
+    
+class Stat(models.Model):
+    site_info = models.ForeignKey(SiteInfo, on_delete=models.CASCADE, default=0)
+    stat_value = models.CharField(max_length=5)
+    stat_label = models.CharField(max_length=30)
+
+# -----------------------------------------------------------------------------------------------------------------
 
 # messages:
 class MessageModel(models.Model):
@@ -68,16 +85,15 @@ class ContactText(models.Model):
         return self.subtitle[:70]
    
 # -----------------------------------------------------------------------------------------------------------------
- 
+
     
 # sections:
 class Section(models.Model):
     orders = [
         (1, '1'),
         (2, '2'),
-        (3, '3'),
-        (4, '4')
-    ]
+        (3, '3')
+        ]
     section_name = models.CharField(max_length=60, unique=True)
     order = models.PositiveSmallIntegerField(choices=orders)
     
@@ -86,8 +102,8 @@ class Section(models.Model):
     
     def __str__(self):
         return f'{self.order} - {self.section_name}'
-    
-class Section2(models.Model):
+
+class Section1(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=2)
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=200)
@@ -101,7 +117,7 @@ class Section2(models.Model):
     def __str__(self):
         return f'{self.title} - {self.emoji}'    
  
-class Section3(models.Model):
+class Section2(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=3)
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=80)
@@ -114,7 +130,8 @@ class Section3(models.Model):
     def __str__(self):
         return f'{self.title} - {self.emoji}'
    
-class Section4(models.Model):
+class Section3(models.Model):
+    
     section = models.ForeignKey(Section, on_delete=models.CASCADE, editable=False, default=4)
     year = models.CharField(max_length=4)
     title = models.CharField(max_length=50)

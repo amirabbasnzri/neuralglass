@@ -47,7 +47,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # my_processors:
                 'main.context_processors.footer_context',
-                'main.context_processors.section_context'
+                'main.context_processors.section_context',
+                'main.context_processors.site_info_context'
             ],
         },
     },

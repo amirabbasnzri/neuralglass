@@ -9,3 +9,8 @@ def section_context(request):
     return {
         'section': Section.objects.order_by('id').all()
     }
+    
+def site_info_context(request):
+    return {
+        'site_info': Section.objects.first()
+    }
