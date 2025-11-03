@@ -729,15 +729,7 @@ https://templatemo.com/tm-597-neural-glass
  .feature-visual:hover::before {
      background: linear-gradient(45deg, rgba(224, 163, 255, 0.2), rgba(255, 105, 180, 0.2));
 }
- .feature-row:nth-child(1) .feature-visual {
-     background-image: url('images/templatemo-neural-01.jpg');
-}
- .feature-row:nth-child(2) .feature-visual {
-     background-image: url('images/templatemo-neural-02.jpg');
-}
- .feature-row:nth-child(3) .feature-visual {
-     background-image: url('images/templatemo-neural-03.jpg');
-}
+
  .feature-icon {
      font-size: 4rem;
      margin-bottom: 25px;

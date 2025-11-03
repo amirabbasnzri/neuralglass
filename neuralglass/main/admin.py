@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import MessageModel, SocialLink, ContactText, MatrixProtocol, FooterInfo, TimeLineEvent
+from .models import MessageModel, SocialLink, ContactText, MatrixProtocol, FooterInfo, TimeLineEvent, QuantumCapability
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -41,7 +41,7 @@ class SocialLinksAdmin(admin.ModelAdmin):
         return super().add_view(request, form_url, extra_context)
     
 @admin.register(ContactText)
-class FooterInfoAdmin(admin.ModelAdmin):
+class ContactTextAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return not ContactText.objects.exists()
     def has_delete_permission(self, request, obj=None):
@@ -77,11 +77,20 @@ class FooterInfoAdmin(admin.ModelAdmin):
         return False
     
 @admin.register(TimeLineEvent)
-class FooterInfoAdmin(admin.ModelAdmin):
+class TimeLineEventAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         if TimeLineEvent.objects.count() >= 4:
-            return not TimeLineEvent.objects.exists()
+            return False
         return super().has_add_permission(request)
 
 
+
+   
+@admin.register(QuantumCapability)
+class QuantumCapabilityAdmin(admin.ModelAdmin):
+    
+    def has_add_permission(self, request):
+        if QuantumCapability.objects.count() >= 4:
+            return False
+        return super().has_add_permission(request)

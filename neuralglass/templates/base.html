@@ -54,6 +54,9 @@
                 <li><a href="{% url 'main:main' %}#showcase">Matrix</a></li>
                 <li><a href="{% url 'main:main' %}#timeline">Evolution</a></li>
                 <li><a href="{% url 'main:main' %}#contact">Connect</a></li>
+                {% if user.is_staff %}
+                    <li><a href="{% url 'admin:index' %}">Admin Panel</a></li>
+                {% endif %}
                 {% comment %} <li><a href="https://example.com" target="_blank" class="external-link">External</a></li> {% endcomment %}
             </ul>
             <div class="mobile-menu-toggle">
@@ -67,6 +70,9 @@
             <a href="{% url 'main:main' %}#showcase">Matrix</a>
             <a href="{% url 'main:main' %}#timeline">Evolution</a>
             <a href="{% url 'main:main' %}#contact">Connect</a>
+            {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}">Admin Panel</a>
+            {% endif %}
         </div>
 </header>
 

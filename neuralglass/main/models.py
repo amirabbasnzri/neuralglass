@@ -25,7 +25,7 @@ class SocialLink(models.Model):
     
     name = models.CharField(max_length=100)
     url = models.URLField(max_length=200, blank=False)
-    icon = models.ImageField(upload_to='media/social_links', blank=False, null=False)
+    icon = models.ImageField(upload_to='media/social_links_img', blank=False, null=False)
     order = models.PositiveSmallIntegerField(choices=orders)
     is_active = models.BooleanField(default=True)
 
@@ -114,3 +114,18 @@ class TimeLineEvent(models.Model):
         
     def __str__(self):
         return f'{self.year} - {self.title}'
+    
+    
+
+class QuantumCapability(models.Model):
+    title = models.CharField(max_length=30)
+    description = models.TextField(max_length=200)
+    emoji = models.CharField(max_length=2)
+    image = models.ImageField(upload_to='media/quantum_capabilities_img')
+    
+    class Meta:
+        verbose_name = 'QuantumCapability'
+        verbose_name_plural = 'QuantumCapabilities'
+    
+    def __str__(self):
+        return f'{self.title} - {self.emoji}'
